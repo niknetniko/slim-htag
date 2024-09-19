@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/gem_tasks'
 
 begin
@@ -5,20 +7,8 @@ begin
 
   RSpec::Core::RakeTask.new(:spec)
 
-  task :test => :spec
-  task :default => :spec
-rescue LoadError => e
-  warn "#{e.path} is not available"
-end
-
-begin
-  require 'rubocop/rake_task'
-
-  RuboCop::RakeTask.new(:rubocop) do |t|
-    t.options = ['--display-cop-names', '--fail-level', 'W']
-  end
-
-  task :default => :rubocop
+  task test: :spec
+  task default: :spec
 rescue LoadError => e
   warn "#{e.path} is not available"
 end

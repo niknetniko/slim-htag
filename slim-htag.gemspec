@@ -1,4 +1,6 @@
-require File.expand_path('../lib/slim/h_tag/version', __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path('lib/slim/h_tag/version', __dir__)
 
 Gem::Specification.new do |s|
   s.name          = 'slim-htag'
@@ -11,13 +13,16 @@ Gem::Specification.new do |s|
   s.summary       = 'Slim filter providing a heading tag with parametrized (dynamic) level (h1-h6)'
 
   s.files         = Dir['lib/**/*', '*.gemspec', 'LICENSE*', 'README*']
+  s.require_paths = ['lib']
 
-  s.required_ruby_version = '>= 2.0'
+  s.required_ruby_version = '>= 3.1'
 
-  s.add_runtime_dependency 'slim', '>= 2.1', '< 4.0'
+  s.add_dependency 'slim', '>= 2.1'
 
-  s.add_development_dependency 'rake', '~> 12.0'
+  s.add_development_dependency 'rake', '~> 13.0'
   s.add_development_dependency 'rspec', '~> 3.6'
-  s.add_development_dependency 'rubocop', '~> 0.49.0'
-  s.add_development_dependency 'simplecov', '~> 0.14'
+  s.add_development_dependency 'rubocop', '~> 1.66'
+  s.add_development_dependency 'rubocop-rake', '~> 0.6'
+  s.add_development_dependency 'rubocop-rspec', '~> 3.0'
+  s.metadata['rubygems_mfa_required'] = 'true'
 end

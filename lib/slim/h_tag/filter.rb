@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'slim'
 require 'temple'
 
@@ -18,30 +19,23 @@ module Slim
         level_index = attributes.find_index do |attrs|
           attrs[0..2] == [:html, :attr, @level_attr]
         end
-        unless level_index
-          raise Temple::FilterError, "Missing attribute '#{@level_attr}' on tag 'h'"
-        end
+        raise Temple::FilterError, "Missing attribute '#{@level_attr}' on tag 'h'" unless level_index
 
         level_exp = attributes.delete_at(level_index).last
-        if level_exp[0] == :slim && level_exp[1] == :attrvalue
-          level_exp = [:dynamic, level_exp.last]
-        end
+        level_exp = [:dynamic, level_exp.last] if level_exp[0] == :slim && level_exp[1] == :attrvalue
 
         [:multi,
-          [:capture, (level_var = unique_name), [:escape, true, level_exp]],
-          [:multi,
-            [:static, '<h'],
-            [:dynamic, level_var],
-            attributes,
-            [:static, '>'],
-          ],
-          (compile(content) if content),
-          [:multi,
-            [:static, '</h'],
-            [:dynamic, level_var],
-            [:static, '>'],
-          ],
-        ].compact
+         [:capture, (level_var = unique_name), [:escape, true, level_exp]],
+         [:multi,
+          [:static, '<h'],
+          [:dynamic, level_var],
+          attributes,
+          [:static, '>']],
+         (compile(content) if content),
+         [:multi,
+          [:static, '</h'],
+          [:dynamic, level_var],
+          [:static, '>']]].compact
       end
     end
   end
